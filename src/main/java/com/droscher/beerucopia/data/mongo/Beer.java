@@ -19,7 +19,7 @@ public class Beer {
     private Style style;
     private Date dateBottled;
     private BigDecimal abv;
-    private Size size;
+    private Integer size;
     private int quantity;
     private Map<RatingType, BigDecimal> ratings = new HashMap<RatingType, BigDecimal>();
     private String location;
