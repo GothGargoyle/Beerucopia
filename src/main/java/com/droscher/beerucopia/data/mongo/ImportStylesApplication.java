@@ -13,7 +13,6 @@ import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
-import org.springframework.batch.item.file.transform.LineTokenizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -62,7 +61,7 @@ public class ImportStylesApplication {
     }
 
     @Bean
-    public Job importStylesJob(final JobBuilderFactory jobs, final Step step) {
+    public static Job importStylesJob(final JobBuilderFactory jobs, final Step step) {
         return jobs.get("importStylesJob")
                     .incrementer(new RunIdIncrementer())
                     .flow(step)
@@ -71,7 +70,7 @@ public class ImportStylesApplication {
     }
 
     @Bean
-    public Step step(final StepBuilderFactory stepBuilderFactory,
+    public static Step step(final StepBuilderFactory stepBuilderFactory,
                      final ItemReader<Style> reader,
                      final ItemWriter<Style> writer) {
         return stepBuilderFactory.get("step")
