@@ -1,4 +1,4 @@
-package com.droscher.beerucopia.data.mongo;
+package com.droscher.beerucopia.domain;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;

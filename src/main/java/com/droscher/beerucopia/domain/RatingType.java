@@ -1,4 +1,4 @@
-package com.droscher.beerucopia.data.mongo;
+package com.droscher.beerucopia.domain;
 
 /**
  * Created by simon on 2014-08-16.

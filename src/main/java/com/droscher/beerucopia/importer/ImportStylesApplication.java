@@ -1,5 +1,7 @@
-package com.droscher.beerucopia.data.mongo;
+package com.droscher.beerucopia.importer;
 
+import com.droscher.beerucopia.domain.Style;
+import com.droscher.beerucopia.repository.StyleRepository;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -14,7 +16,6 @@ import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -80,7 +81,4 @@ public class ImportStylesApplication {
                     .build();
     }
 
-    public static void main(final String[] args) {
-        SpringApplication.run(ImportStylesApplication.class, args);
-    }
 }
