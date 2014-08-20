@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html ng-app="store">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Flatlanders</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+</head>
+<body ng-controller="StoreController as store">
+    <ul class="list-group">
+        <li class="list-group-item" ng-repeat="product in store.products | orderBy: '-price'">
+            <h3><product-title></product-title></h3>
+            <!--button ng-show="product.canPurchase">Add to Cart</button-->
+            <product-panels>
+
+            </product-panels>
+        </li>
+
+    </ul>
+
+    <script type="text/javascript" src="js/angular.js"></script>
+    <script type="text/javascript" src="js/flatlanders.js"></script>
+
+</body>
+</html>
