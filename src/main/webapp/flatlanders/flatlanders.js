@@ -57,14 +57,14 @@
     app.directive('productTitle', function() {
         return {
             restrict: 'E',
-            templateUrl: 'flatlanders/product-title.html'
+            templateUrl: 'product-title.html'
         };
     });
 
     app.directive('productPanels', function() {
        return {
            restrict: 'E',
-           templateUrl: 'flatlanders/product-panels.html',
+           templateUrl: 'product-panels.html',
            controller: function() {
                this.tab = 1;
                this.selectTab = function(setTab) {

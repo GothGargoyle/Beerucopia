@@ -1,38 +1,25 @@
-window.Styles = Ember.Application.create();
+/**
+ * Created by sdroscher on 19/08/14.
+ */
+(function() {
 
-Styles.ApplicationAdapter = DS.RESTAdapter.extend({
-    host: 'http://localhost:8080'
-});
+    var app = angular.module('store', ['ui.bootstrap', 'restangular']);
 
-Styles.ApplicationSerializer = DS.RESTSerializer.extend({
-   normalizePayload: function(payload) {
+    app.controller('StyleController', [ 'Restangular', function(Restangular) {
+        var store = this;
+        store.styles = [ ];
+        store.next = '';
+        store.page = {};
+        store.selectPage = function(page) {
+            var styles = Restangular.one('styles');
+            styles.get({page: page - 1}).then(function(data) {
+                store.styles = data._embedded.styles;
+                store.page = data.page;
+                store.page.number += 1;
+            });
+        };
 
-        var styles = payload._embedded.styles;
-        var transformed = [];
+        store.selectPage(1);
+    }]);
 
-        styles.forEach(function(style) {
-            delete style.links;
-            transformed.push(style);
-        })
-        var payload = { styles: transformed };
-        return payload;
-    }
-});
-
-Styles.Router.map(function() {
-  this.resource('style', { path: '/' });
-});
-
-Styles.StyleRoute = Ember.Route.extend({
-    model: function() {
-        return this.store.find('style');
-    }
-});
-
-Styles.Style = DS.Model.extend({
-    name: DS.attr('string'),
-    key: DS.attr('string'),
-    ratebeerId: DS.attr('string')
-});
-
-
+})();
