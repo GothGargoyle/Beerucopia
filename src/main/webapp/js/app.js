@@ -10,15 +10,15 @@
         store.styles = [ ];
         store.next = '';
         store.page = {};
-        store.selectPage = function(page) {
+        store.selectPage = function() {
+            var page = store.page.number - 1;
             var styles = Restangular.one('styles');
-            styles.get({page: page - 1}).then(function(data) {
+            styles.get({page: page}).then(function(data) {
                 store.styles = data._embedded.styles;
                 store.page = data.page;
                 store.page.number += 1;
             });
         };
-
         store.selectPage(1);
     }]);
 
