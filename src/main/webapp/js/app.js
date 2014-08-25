@@ -3,9 +3,9 @@
  */
 (function() {
 
-    var app = angular.module('store', ['ui.bootstrap', 'restangular']);
+    var stylesApp = angular.module('styles', ['ui.bootstrap', 'restangular']);
 
-    app.controller('StyleController', [ 'Restangular', function(Restangular) {
+    stylesApp.controller('StyleController', [ 'Restangular', function(Restangular) {
         var store = this;
         store.styles = [ ];
         store.next = '';
@@ -21,5 +21,39 @@
         };
         store.selectPage(1);
     }]);
+
+    var breweriesApp = angular.module('breweries', ['ngGrid', 'restangular']);
+
+    breweriesApp.controller('BreweriesController', [ 'Restangular', function(Restangular) {
+        var store = this;
+
+        var breweries = Restangular.one('breweries');
+        breweries.get().then(function(data) {
+            store.breweries = data._embedded.breweries;
+            angular.forEach(store.breweries, function(brewery) {
+                delete brewery._links;
+            });
+        });
+        store.gridOptions = { data: 'store.breweries' };
+
+
+    }]);
+
+
+
+    //breweriesApp.config(function(RestangularProvider) {
+    //   RestangularProvider.addResponseInterceptor(function(data, operation, what, url, response, deferred) {
+    //       var extractedData;
+    //       if (operation === "getList") {
+    //           extractedData = data;
+    //           delete extractedData._links;
+    //       } else {
+    //           extractedData = data;
+    //       }
+    //       return extractedData;
+    //   });
+    //});
+
+
 
 })();

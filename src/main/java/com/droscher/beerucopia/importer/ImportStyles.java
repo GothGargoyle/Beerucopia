@@ -26,16 +26,20 @@ import org.springframework.core.io.ClassPathResource;
  * Created by simon on 2014-08-18.
  */
 @Configuration
-@EnableAutoConfiguration
-@ComponentScan
-@EnableBatchProcessing
-public class ImportStylesApplication {
+public class ImportStyles {
 
     @Autowired
     private StyleRepository styleRepository;
 
+    @Autowired
+    private JobBuilderFactory jobs;
+
+    @Autowired
+    private StepBuilderFactory stepBuilderFactory;
+
+
     @Bean
-    public ItemReader<Style> reader() {
+    public ItemReader<Style> styleReader() {
         FlatFileItemReader<Style> reader = new FlatFileItemReader<Style>();
         reader.setResource(new ClassPathResource("styles.csv"));
 
@@ -54,7 +58,7 @@ public class ImportStylesApplication {
     }
 
     @Bean
-    public ItemWriter<Style> writer() {
+    public ItemWriter<Style> styleWriter() {
         RepositoryItemWriter<Style> writer = new RepositoryItemWriter<Style>();
         writer.setRepository(styleRepository);
         writer.setMethodName("save");
@@ -62,22 +66,20 @@ public class ImportStylesApplication {
     }
 
     @Bean
-    public static Job importStylesJob(final JobBuilderFactory jobs, final Step step) {
-        return jobs.get("importStylesJob")
+    public Job importStylesJob() {
+        return jobs.get("styles")
                     .incrementer(new RunIdIncrementer())
-                    .flow(step)
+                    .flow(styleStep())
                     .end()
                     .build();
     }
 
     @Bean
-    public static Step step(final StepBuilderFactory stepBuilderFactory,
-                     final ItemReader<Style> reader,
-                     final ItemWriter<Style> writer) {
+    public Step styleStep() {
         return stepBuilderFactory.get("step")
                     .<Style, Style> chunk(10)
-                    .reader(reader)
-                    .writer(writer)
+                    .reader(styleReader())
+                    .writer(styleWriter())
                     .build();
     }
 

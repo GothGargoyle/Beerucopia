@@ -1,6 +1,7 @@
 package com.droscher.beerucopia.domain;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 /**
  * Created by simon on 2014-08-16.
@@ -10,8 +11,11 @@ public class Brewery {
     @Id
     private String id;
 
+    @Indexed(unique = true)
     private String name;
+
     private String country;
+
     private String region;
 
     public String getId() {
